@@ -1,24 +1,49 @@
-function creaElementoHtml( tagHtml, classi, text ){
-    let elemento = document.createElement( tagHtml )
-    elemento.className = classi;
+const playBtn = document.getElementById("play");
 
-    elemento.innerText = text;
+playBtn.addEventListener("click", generaGriglia);
 
-    return elemento 
-}
+function generaGriglia() {
+    const livello = document.getElementById("livello").value;
+    const griglia = document.querySelector(".griglia");
+    griglia.innerHTML = "";
 
-let griglia = document.querySelector('.griglia')
+    let width = "";
 
-for(let i = 1; i <= 100; i++){
-    const divbox = creaElementoHtml("div", "box", i);
+    let numBox = "";
 
-    
-    divbox.addEventListener('click', function(){
-     
-       this.classList.toggle('active')
-       console.log('Cella cliccata:', this.innerText);
-       
+    if (livello === "easy") {
+      width = "calc(100% / 10)";
+      numBox = 100;
+
+    } else if (livello === "normal") {
+      width = "calc(100% / 9)";
+      numBox = 81;
+
+    } else if (livello === "hard") {
+      width = "calc(100% / 7)";
+      numBox = 49;
+    }
+
+    let boxCounter = 1;
+    for (let i = 0; i < numBox; i++) {
+        const box = document.createElement("div");
+        box.classList.add("box", livello);
+
+        box.style.width = width;
+
+        box.innerText = boxCounter;
+
+        griglia.appendChild(box);
+        
+        boxCounter++;
+
+    box.addEventListener('click', function(){
+        
+    this.classList.toggle('active')
+    console.log('Cella cliccata:', this.innerText);
+
     })
-
-    griglia.append( divbox )
+    }   
+    const game = document.querySelector(".game");
+    game.style.display = "inline-block";
 }
